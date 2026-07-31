@@ -1,3 +1,25 @@
 spring:
   application:
     name: inventory-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5555/db_inventory
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    time-zone: America/Sao_Paulo
+
+server:
+  port: 8083

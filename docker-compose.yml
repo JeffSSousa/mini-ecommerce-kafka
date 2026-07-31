@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:17.4
+    container_name: db_ecommerce
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5555:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_prod
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@email.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "15433:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_prod_data:/var/lib/pgadmin
+
+
+volumes:
+  pgadmin_prod_data:

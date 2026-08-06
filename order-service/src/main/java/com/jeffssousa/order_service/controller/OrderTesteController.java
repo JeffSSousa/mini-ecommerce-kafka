@@ -14,16 +14,17 @@ public class OrderTesteController {
 
     private final OrderProducer producer;
 
+
     @PostMapping
     public String criarPedido() {
 
-        OrderCreatedEvent event = new OrderCreatedEvent(
-                1L,
-                "João",
-                2500.00
-        );
+//        OrderCreatedEvent event = new OrderCreatedEvent(
+//                1L,
+//                "João",
+//                2500.00
+//        );
 
-        producer.send("test-topics",event);
+//        producer.send("test-topics",event);
 
         return "Pedido enviado para o Kafka.";
     }

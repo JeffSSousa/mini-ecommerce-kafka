@@ -26,5 +26,8 @@ spring:
 
       value-serializer: org.apache.kafka.common.serialization.JsonSerializer
 
+    consumer:
+      group-id: order-service
+
 server:
   port: 8081

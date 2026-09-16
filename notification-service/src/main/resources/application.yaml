@@ -1,3 +1,11 @@
 spring:
   application:
     name: notification-service
+
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN
+    org.apache.kafka: WARN
+    org.springframework.kafka: WARN

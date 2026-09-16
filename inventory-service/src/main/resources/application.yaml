@@ -12,11 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
 
-    show-sql: true
+    show-sql: false
 
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
 
   jackson:
     time-zone: America/Sao_Paulo
@@ -29,3 +29,10 @@ spring:
 
 server:
   port: 8083
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN
+    org.apache.kafka: WARN
+    org.springframework.kafka: WARN

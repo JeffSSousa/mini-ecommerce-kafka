@@ -1,11 +1,8 @@
 package com.jeffssousa.inventory_service.config;
 
-import com.jeffssousa.inventory_service.event.OrderCreatedEvent;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
@@ -18,8 +15,7 @@ import java.util.Map;
 public class KafkaConsumerConfig {
 
 
-    @Bean
-    public ConsumerFactory<String, OrderCreatedEvent> consumerFactory(){
+    protected Map<String, Object> consumerProperties(){
 
         Map<String, Object> configProps = new HashMap<>();
 
@@ -30,34 +26,24 @@ public class KafkaConsumerConfig {
 
         configProps.put(
                 "group.id",
-                "inventory_service"
+                "inventory-service"
         );
 
-        JacksonJsonDeserializer<OrderCreatedEvent> deserializer =
-                new JacksonJsonDeserializer<>(
-                        OrderCreatedEvent.class,
-                        false
-                );
+        return configProps;
+    }
+
+    protected <T> ConsumerFactory<String, T> createConsumerFactory(
+            Class<T> eventClass
+    ){
+
+        JacksonJsonDeserializer<T> deserializer =
+                new JacksonJsonDeserializer<>(eventClass, false);
 
         return new DefaultKafkaConsumerFactory<>(
-                configProps,
+                consumerProperties(),
                 new StringDeserializer(),
                 deserializer
         );
-
-    }
-
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent>
-    kafkaListenerContainerFactory(){
-
-        ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-
-        factory.setConsumerFactory(consumerFactory());
-
-        return factory;
 
     }
 

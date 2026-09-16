@@ -17,7 +17,11 @@ public class OrderConsumer {
 
     private final LogisticsService logisticsService;
 
-    @KafkaListener(topics = "order-created", groupId = "inventory-service")
+    @KafkaListener(
+            topics = "order-created",
+            groupId = "inventory-service",
+            containerFactory = "orderCreatedKafkaListenerContainerFactory"
+    )
     public void consumerOrderCreated(OrderCreatedEvent event){
         System.out.println("Processando Pedido");
         System.out.println("Produto encontrado: " + event);

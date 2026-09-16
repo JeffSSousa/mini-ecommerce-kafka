@@ -3,6 +3,8 @@ package com.jeffssousa.order_service.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "tb_orders")
 @Getter
@@ -13,7 +15,10 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderId;
+
+    @Column(nullable = false)
+    private UUID consumerId;
 
     @Column(nullable = false)
     private Long productId;

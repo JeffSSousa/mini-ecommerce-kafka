@@ -21,5 +21,11 @@ spring:
   jackson:
     time-zone: America/Sao_Paulo
 
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: inventory-service
+
 server:
   port: 8083

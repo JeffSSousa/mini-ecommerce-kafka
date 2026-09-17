@@ -34,4 +34,85 @@ public class LogisticsService {
     }
 
 
+    public Logistics pickingStatus(Long id) {
+
+        Logistics logistics = repository.findByOrderId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado no WMS"));
+
+        System.out.println("Pedido encontrado: " + logistics.getOrderId());
+
+        if (!logistics.getStatus().equals("READY_FOR_PICKING")){
+            throw new IllegalArgumentException("O pedido está em outra etapa: " + logistics.getStatus());
+        }
+
+        logistics.setStatus("PICKING");
+        return repository.save(logistics);
+    }
+
+    public Logistics loadingStatus(Long id) {
+
+        Logistics logistics = repository.findByOrderId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado no WMS"));
+
+        System.out.println("Pedido encontrado: " + logistics.getOrderId());
+
+        if (!logistics.getStatus().equals("PICKING")) {
+            throw new IllegalArgumentException("O pedido está em outra etapa: " + logistics.getStatus());
+        }
+
+        logistics.setStatus("LOADED");
+
+        return repository.save(logistics);
+    }
+
+    public Logistics invoicingStatus(Long id) {
+
+        Logistics logistics = repository.findByOrderId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado no WMS"));
+
+        System.out.println("Pedido encontrado: " + logistics.getOrderId());
+
+        if (!logistics.getStatus().equals("LOADED")) {
+
+            throw new IllegalArgumentException("O pedido está em outra etapa: " + logistics.getStatus());
+        }
+
+        logistics.setStatus("INVOICED");
+
+        return repository.save(logistics);
+    }
+
+    public Logistics shippingStatus(Long id) {
+
+        Logistics logistics = repository.findByOrderId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado no WMS"));
+
+        System.out.println("Pedido encontrado: " + logistics.getOrderId());
+
+        if (!logistics.getStatus().equals("INVOICED")) {
+            throw new IllegalArgumentException("O pedido está em outra etapa: " + logistics.getStatus());
+        }
+
+        logistics.setStatus("SHIPPED");
+
+        return repository.save(logistics);
+    }
+
+    public Logistics deliveryStatus(Long id) {
+
+        Logistics logistics = repository.findByOrderId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado no WMS"));
+
+        System.out.println("Pedido encontrado: " + logistics.getOrderId());
+
+        if (!logistics.getStatus().equals("SHIPPED")) {
+            throw new IllegalArgumentException("O pedido está em outra etapa: " + logistics.getStatus());
+        }
+
+        logistics.setStatus("DELIVERED");
+
+        return repository.save(logistics);
+    }
+
+
 }

@@ -1,3 +1,5 @@
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+
 # Kafka Trainning
 
 # Order Management System
